@@ -12,9 +12,16 @@ This reel brings together AI-assisted visual development, 3D craft, product visu
 
 <video
   controls
+  controlsList="nodownload noremoteplayback"
+  disablePictureInPicture
   playsInline
   preload="metadata"
-  style={{ width: "100%", borderRadius: "12px", background: "#000" }}
+  onContextMenu={(e) => e.preventDefault()}
+  style={{
+    width: "100%",
+    borderRadius: "12px",
+    background: "#000"
+  }}
 >
   <source
     src="https://res.cloudinary.com/nks8abmk/video/upload/v1786611811/Ai-Hybrid_Showreel.mp4"
