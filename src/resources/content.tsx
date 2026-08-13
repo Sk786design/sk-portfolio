@@ -5,7 +5,7 @@ const person: Person = {
   lastName: "SK",
   name: "Alauddin SK",
   role: "AI Artist · 3D Artist · Product Visualizer",
-  avatar: "/images/avatar.jpg",
+  avatar: "/images/avatar.png",
   email: "",
   location: "Asia/Kolkata",
   languages: ["English", "Hindi", "Bengali"],
