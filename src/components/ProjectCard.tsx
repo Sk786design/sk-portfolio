@@ -38,9 +38,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         (isVideo ? (
           <video
             controls
+            controlsList="nodownload noremoteplayback"
+            disablePictureInPicture
             playsInline
             preload="metadata"
-            poster=""
+            onContextMenu={(e) => e.preventDefault()}
             style={{
               width: "100%",
               aspectRatio: "16 / 9",
@@ -49,18 +51,28 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               background: "#000",
             }}
           >
-            <source src={media} type={media.toLowerCase().includes(".webm") ? "video/webm" : "video/mp4"} />
+            <source
+              src={media}
+              type={
+                media.toLowerCase().includes(".webm")
+                  ? "video/webm"
+                  : "video/mp4"
+              }
+            />
           </video>
         ) : (
           <img
             src={media}
             alt={title}
+            draggable={false}
+            onContextMenu={(e) => e.preventDefault()}
             style={{
               width: "100%",
               aspectRatio: "16 / 9",
               objectFit: "cover",
               borderRadius: "12px",
               display: "block",
+              userSelect: "none",
             }}
           />
         ))}
@@ -81,12 +93,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           </Flex>
         )}
 
-        {(avatars?.length > 0 || description?.trim() || content?.trim()) && (
+        {(avatars?.length > 0 ||
+          description?.trim() ||
+          content?.trim()) && (
           <Column flex={7} gap="16">
-            {avatars?.length > 0 && <AvatarGroup avatars={avatars} size="m" reverse />}
+            {avatars?.length > 0 && (
+              <AvatarGroup avatars={avatars} size="m" reverse />
+            )}
 
             {description?.trim() && (
-              <Text wrap="balance" variant="body-default-s" onBackground="neutral-weak">
+              <Text
+                wrap="balance"
+                variant="body-default-s"
+                onBackground="neutral-weak"
+              >
                 {description}
               </Text>
             )}
@@ -98,7 +118,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                   style={{ margin: "0", width: "fit-content" }}
                   href={href}
                 >
-                  <Text variant="body-default-s">Read case study</Text>
+                  <Text variant="body-default-s">
+                    Read case study
+                  </Text>
                 </SmartLink>
               )}
 
@@ -108,7 +130,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                   style={{ margin: "0", width: "fit-content" }}
                   href={link}
                 >
-                  <Text variant="body-default-s">View project</Text>
+                  <Text variant="body-default-s">
+                    View project
+                  </Text>
                 </SmartLink>
               )}
             </Flex>
