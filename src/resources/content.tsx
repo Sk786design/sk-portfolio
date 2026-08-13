@@ -1,4 +1,13 @@
-import { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/types";
+import {
+  About,
+  Blog,
+  Gallery,
+  Home,
+  Newsletter,
+  Person,
+  Social,
+  Work,
+} from "@/types";
 
 const person: Person = {
   firstName: "Alauddin",
@@ -47,8 +56,9 @@ const home: Home = {
   },
   subline: (
     <>
-      I'm {person.firstName}, an {person.role.toLowerCase()} focused on creating cinematic product visuals,
-      AI films, advertising imagery and high-end 3D work.
+      I'm {person.firstName}, an AI Artist, 3D Artist and Product Visualizer
+      focused on creating cinematic product visuals, AI films, advertising
+      imagery and high-end 3D work.
     </>
   ),
 };
@@ -58,71 +68,146 @@ const about: About = {
   label: "About",
   title: `About — ${person.name}`,
   description: `${person.name} — AI Artist, 3D Artist and Product Visualizer.`,
+
   tableOfContent: {
     display: true,
     subItems: false,
   },
+
   avatar: {
     display: true,
   },
+
   calendar: {
     display: false,
     link: "",
   },
+
   intro: {
     display: true,
     title: "About me",
     description: (
       <>
-        I am a multidisciplinary visual artist working across AI, 3D, product visualization and film.
-        My focus is turning ideas into polished visuals that feel cinematic, intentional and ready for
-        advertising, brand communication and storytelling.
-        <br /><br />
-        My workflow combines traditional 3D production with generative AI tools, compositing,
-        editing and visual direction. I enjoy working from a product or concept and building the complete
-        visual language around it.
+        I am an AI Artist, 3D Artist and AI Filmmaker / Visual Artist working
+        across generative imagery, cinematic video and visual development.
+        <br />
+        <br />
+        I bring 3D production knowledge into AI filmmaking through camera
+        thinking, lighting, composition and post-production to create polished,
+        cinematic visuals for advertising, product communication and
+        storytelling.
       </>
     ),
   },
+
   work: {
     display: true,
     title: "Experience",
+
     experiences: [
       {
-        company: "U Studioz",
-        timeframe: "2022 - Present",
-        role: "AI Artist / 3D Artist",
+        company: "Pitchperfekt Collective",
+        timeframe: "2026 - Present",
+        role: "AI Artist",
         achievements: [
-          <>Creating AI-driven films, product visuals, advertising content and cinematic image sequences.</>,
-          <>Developing 3D product animations, lighting, look development and visual treatments for commercial work.</>,
-          <>Combining Blender, rendering, compositing and generative AI workflows to produce finished visual content.</>,
+          <>
+            Working across generative imagery, cinematic video and visual
+            development.
+          </>,
+          <>
+            Bringing 3D production knowledge into AI filmmaking through camera
+            thinking, lighting, composition and post-production.
+          </>,
+          <>
+            Developing cinematic visual content through AI-assisted image and
+            video workflows.
+          </>,
         ],
         images: [],
       },
+
       {
-        company: "Freelance / Creative Projects",
-        timeframe: "Ongoing",
-        role: "3D Artist / Visual Creator",
+        company: "U Studioz, Mumbai",
+        timeframe: "2024 - 2026",
+        role: "3D Artist",
         achievements: [
-          <>Producing product visualization, animation and AI-assisted creative work for brands and independent projects.</>,
-          <>Building cinematic concepts from storyboard and visual development through final shots and edits.</>,
+          <>
+            Worked across 3D production, product visualization, lighting,
+            rendering and commercial visual development.
+          </>,
+          <>
+            Created product-focused visuals and animation using traditional 3D
+            production workflows.
+          </>,
+        ],
+        images: [],
+      },
+
+      {
+        company: "Sally's Studio",
+        timeframe: "2022 - 2024",
+        role: "3D Artist",
+        achievements: [
+          <>
+            Worked on 3D visual production, product visualization and
+            animation.
+          </>,
+        ],
+        images: [],
+      },
+
+      {
+        company: "Evolution Sports Nutrition Pvt. Ltd.",
+        timeframe: "2021 - 2022",
+        role: "Graphic Designer",
+        achievements: [
+          <>
+            Created graphic design and visual communication assets for the
+            brand.
+          </>,
         ],
         images: [],
       },
     ],
   },
+
   studies: {
     display: false,
     title: "Studies",
     institutions: [],
   },
+
   technical: {
     display: true,
     title: "Core Skills",
+
     skills: [
       {
+        title: "AI Visual Production",
+        description: (
+          <>
+            Generative imagery, cinematic video, visual development and
+            AI-assisted filmmaking workflows.
+          </>
+        ),
+        tags: [
+          { name: "Veo" },
+          { name: "Midjourney" },
+          { name: "Seedance" },
+          { name: "Kling" },
+          { name: "Luma" },
+        ],
+        images: [],
+      },
+
+      {
         title: "3D & Rendering",
-        description: <>Blender, Maya, Arnold, V-Ray and Cycles for product visualization, animation, lighting and rendering.</>,
+        description: (
+          <>
+            Blender, Maya, Arnold, V-Ray and Cycles for product visualization,
+            animation, lighting and rendering.
+          </>
+        ),
         tags: [
           { name: "Blender" },
           { name: "Maya" },
@@ -132,21 +217,32 @@ const about: About = {
         ],
         images: [],
       },
+
       {
-        title: "AI & Generative Visuals",
-        description: <>AI-assisted concept development, image generation, video generation, visual consistency and cinematic experimentation.</>,
+        title: "Product Films & Advertising",
+        description: (
+          <>
+            Cinematic product visuals, advertising imagery, product films and
+            visual storytelling.
+          </>
+        ),
         tags: [
-          { name: "Veo" },
-          { name: "Midjourney" },
-          { name: "Luma" },
-          { name: "Stable Diffusion" },
-          { name: "Google Flow" },
+          { name: "Product Films" },
+          { name: "Advertising" },
+          { name: "Visual Storytelling" },
+          { name: "Camera & Composition" },
         ],
         images: [],
       },
+
       {
-        title: "Post & Design",
-        description: <>Photoshop, After Effects, Premiere Pro, Illustrator and Figma for compositing, editing, graphics and presentation.</>,
+        title: "Post & Finish",
+        description: (
+          <>
+            Photoshop, After Effects, Premiere Pro, Illustrator and Figma for
+            compositing, editing, graphics and presentation.
+          </>
+        ),
         tags: [
           { name: "Photoshop" },
           { name: "After Effects" },
@@ -179,28 +275,16 @@ const gallery: Gallery = {
   label: "Gallery",
   title: `Visual Gallery — ${person.name}`,
   description: `Selected visual experiments and artwork by ${person.name}.`,
-  images: [
-    {
-      src: "/images/gallery/horizontal-1.jpg",
-      alt: "Visual artwork",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-4.jpg",
-      alt: "Visual artwork",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/horizontal-3.jpg",
-      alt: "Visual artwork",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-1.jpg",
-      alt: "Visual artwork",
-      orientation: "vertical",
-    },
-  ],
+  images: [],
 };
 
-export { person, social, newsletter, home, about, blog, work, gallery };
+export {
+  person,
+  social,
+  newsletter,
+  home,
+  about,
+  blog,
+  work,
+  gallery,
+};
