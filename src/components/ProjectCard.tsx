@@ -2,7 +2,6 @@
 
 import {
   AvatarGroup,
-  Carousel,
   Column,
   Flex,
   Heading,
@@ -30,15 +29,42 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   avatars,
   link,
 }) => {
+  const media = images?.[0] || "";
+  const isVideo = /\.(mp4|webm|ogg)(\?|$)/i.test(media);
+
   return (
     <Column fillWidth gap="m">
-      <Carousel
-        sizes="(max-width: 960px) 100vw, 960px"
-        items={images.map((image) => ({
-          slide: image,
-          alt: title,
-        }))}
-      />
+      {media &&
+        (isVideo ? (
+          <video
+            controls
+            playsInline
+            preload="metadata"
+            poster=""
+            style={{
+              width: "100%",
+              aspectRatio: "16 / 9",
+              objectFit: "cover",
+              borderRadius: "12px",
+              background: "#000",
+            }}
+          >
+            <source src={media} type={media.toLowerCase().includes(".webm") ? "video/webm" : "video/mp4"} />
+          </video>
+        ) : (
+          <img
+            src={media}
+            alt={title}
+            style={{
+              width: "100%",
+              aspectRatio: "16 / 9",
+              objectFit: "cover",
+              borderRadius: "12px",
+              display: "block",
+            }}
+          />
+        ))}
+
       <Flex
         s={{ direction: "column" }}
         fillWidth
@@ -54,14 +80,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             </Heading>
           </Flex>
         )}
+
         {(avatars?.length > 0 || description?.trim() || content?.trim()) && (
           <Column flex={7} gap="16">
             {avatars?.length > 0 && <AvatarGroup avatars={avatars} size="m" reverse />}
+
             {description?.trim() && (
               <Text wrap="balance" variant="body-default-s" onBackground="neutral-weak">
                 {description}
               </Text>
             )}
+
             <Flex gap="24" wrap>
               {content?.trim() && (
                 <SmartLink
@@ -72,6 +101,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                   <Text variant="body-default-s">Read case study</Text>
                 </SmartLink>
               )}
+
               {link && (
                 <SmartLink
                   suffixIcon="arrowUpRightFromSquare"
