@@ -36,6 +36,52 @@ const display: DisplayConfig = {
 // Protected routes
 const protectedRoutes: ProtectedRoutesConfig = {};
 
+// Mailchimp configuration
+// Newsletter is disabled in content.tsx, but this keeps the config valid.
+const mailchimp: MailchimpConfig = {
+  action: "https://url/subscribe/post?parameters",
+  effects: {
+    mask: {
+      cursor: true,
+      x: 50,
+      y: 0,
+      radius: 100,
+    },
+    gradient: {
+      display: true,
+      opacity: 90,
+      x: 50,
+      y: 0,
+      width: 50,
+      height: 50,
+      tilt: 0,
+      colorStart: "accent-background-strong",
+      colorEnd: "static-transparent",
+    },
+    dots: {
+      display: true,
+      opacity: 20,
+      size: "2",
+      color: "brand-on-background-weak",
+    },
+    grid: {
+      display: false,
+      opacity: 100,
+      color: "neutral-alpha-medium",
+      width: "0.25rem",
+      height: "0.25rem",
+    },
+    lines: {
+      display: false,
+      opacity: 100,
+      color: "neutral-alpha-medium",
+      size: "16",
+      thickness: 1,
+      angle: 90,
+    },
+  },
+};
+
 // Fonts
 import { Geist } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
@@ -85,7 +131,7 @@ const style: StyleConfig = {
   scaling: "100",
 };
 
-// Data/chart style
+// Data style
 const dataStyle: DataStyleConfig = {
   variant: "gradient",
   mode: "categorical",
@@ -146,7 +192,7 @@ const effects: EffectsConfig = {
   },
 };
 
-// Schema / SEO
+// SEO / schema
 const schema: SchemaConfig = {
   logo: "",
   type: "Person",
@@ -180,6 +226,7 @@ const socialSharing: SocialSharingConfig = {
 
 export {
   display,
+  mailchimp,
   routes,
   protectedRoutes,
   baseURL,
