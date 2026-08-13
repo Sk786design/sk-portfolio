@@ -3,18 +3,21 @@ import {
   DisplayConfig,
   EffectsConfig,
   FontsConfig,
+  MailchimpConfig,
+  ProtectedRoutesConfig,
   RoutesConfig,
   SameAsConfig,
   SchemaConfig,
   SocialSharingConfig,
   StyleConfig,
 } from "@/types";
+
 import { home, person, social } from "./content";
 
-// Production domain used for SEO metadata and schema.
+// Production website URL
 const baseURL: string = "https://sk-portfolio-gold.vercel.app";
 
-// Keep the portfolio focused: Home, Work, About.
+// Website navigation
 const routes: RoutesConfig = {
   "/": true,
   "/about": true,
@@ -23,12 +26,17 @@ const routes: RoutesConfig = {
   "/gallery": false,
 };
 
-const display = {
+// Header display settings
+const display: DisplayConfig = {
   location: false,
   time: false,
   themeSwitcher: true,
 };
 
+// Protected routes
+const protectedRoutes: ProtectedRoutesConfig = {};
+
+// Fonts
 import { Geist } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
 
@@ -63,6 +71,7 @@ const fonts: FontsConfig = {
   code,
 };
 
+// Visual style
 const style: StyleConfig = {
   theme: "system",
   neutral: "gray",
@@ -76,6 +85,7 @@ const style: StyleConfig = {
   scaling: "100",
 };
 
+// Data/chart style
 const dataStyle: DataStyleConfig = {
   variant: "gradient",
   mode: "categorical",
@@ -90,6 +100,7 @@ const dataStyle: DataStyleConfig = {
   },
 };
 
+// Background effects
 const effects: EffectsConfig = {
   mask: {
     cursor: false,
@@ -97,6 +108,7 @@ const effects: EffectsConfig = {
     y: 0,
     radius: 100,
   },
+
   gradient: {
     display: false,
     opacity: 100,
@@ -108,12 +120,14 @@ const effects: EffectsConfig = {
     colorStart: "accent-background-strong",
     colorEnd: "page-background",
   },
+
   dots: {
     display: true,
     opacity: 40,
     size: "2",
     color: "brand-background-strong",
   },
+
   grid: {
     display: false,
     opacity: 100,
@@ -121,6 +135,7 @@ const effects: EffectsConfig = {
     width: "0.25rem",
     height: "0.25rem",
   },
+
   lines: {
     display: false,
     opacity: 100,
@@ -131,6 +146,7 @@ const effects: EffectsConfig = {
   },
 };
 
+// Schema / SEO
 const schema: SchemaConfig = {
   logo: "",
   type: "Person",
@@ -139,12 +155,14 @@ const schema: SchemaConfig = {
   email: person.email,
 };
 
+// Social profiles
 const sameAs: SameAsConfig = {
   threads: social.find((s) => s.name === "Threads")?.link ?? "",
   linkedin: social.find((s) => s.name === "LinkedIn")?.link ?? "",
   discord: social.find((s) => s.name === "Discord")?.link ?? "",
 };
 
+// Disable social sharing UI
 const socialSharing: SocialSharingConfig = {
   display: false,
   platforms: {
@@ -163,6 +181,7 @@ const socialSharing: SocialSharingConfig = {
 export {
   display,
   routes,
+  protectedRoutes,
   baseURL,
   fonts,
   style,
