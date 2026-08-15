@@ -33,23 +33,51 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const media = images?.[0] || "";
 
   /*
-   * Support all common video formats including MOV.
+   * Detect all common video formats.
+   * MOV is included for the POCO project.
    */
   const isVideo = /\.(mp4|webm|ogg|mov)(\?|$)/i.test(media);
 
-  /*
-   * Mobile performance:
-   * Only attach the video source when the card is close to
-   * the viewport. This prevents 10+ videos from loading
-   * simultaneously on mobile.
-   */
-  const mediaRef = useRef<HTMLVideoElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
 
-  useEffect(() => {
-    if (!isVideo || !mediaRef.current) return;
+  /*
+   * Generate a Cloudinary thumbnail from the video.
+   *
+   * Example:
+   *
+   * video/upload/v123/file.mp4
+   *
+   * becomes:
+   *
+   * video/upload/so_0,w_1280,h_720,c_fill,q_auto,f_jpg/v123/file.jpg
+   *
+   * Cloudinary generates the thumbnail automatically.
+   */
+  const getVideoThumbnail = (url: string) => {
+    if (!url) return "";
 
-    const video = mediaRef.current;
+    return url
+      .replace(
+        "/video/upload/",
+        "/video/upload/so_0,w_1280,h_720,c_fill,q_auto,f_jpg/"
+      )
+      .replace(/\.(mp4|webm|ogg|mov)(\?.*)?$/i, ".jpg");
+  };
+
+  const thumbnail = isVideo
+    ? getVideoThumbnail(media)
+    : media;
+
+  /*
+   * Load the actual video only when the card gets close
+   * to the viewport.
+   */
+  useEffect(() => {
+    if (!isVideo || !videoRef.current) return;
+
+    const video = videoRef.current;
 
     if (!("IntersectionObserver" in window)) {
       setShouldLoadVideo(true);
@@ -66,7 +94,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         }
       },
       {
-        rootMargin: "300px 0px",
+        rootMargin: "400px 0px",
         threshold: 0.01,
       }
     );
@@ -79,12 +107,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   }, [isVideo]);
 
   /*
-   * Cloudinary can convert the MOV to MP4 on delivery.
-   * This makes the POCO video much safer on mobile browsers.
+   * Convert Cloudinary videos to MP4 for better browser/mobile
+   * compatibility.
    */
   const videoSrc = media.replace(
     "/video/upload/",
-    "/video/upload/f_mp4/"
+    "/video/upload/q_auto,f_mp4/"
   );
 
   return (
@@ -92,14 +120,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       {media &&
         (isVideo ? (
           <video
-            ref={mediaRef}
+            ref={videoRef}
             controls
             controlsList="nodownload noremoteplayback"
             disablePictureInPicture
             playsInline
             muted
             preload="none"
-            poster=""
+            poster={thumbnail}
+            onContextMenu={(e) => e.preventDefault()}
             style={{
               width: "100%",
               height: "auto",
@@ -110,7 +139,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               display: "block",
               maxWidth: "100%",
             }}
-            onContextMenu={(e) => e.preventDefault()}
           >
             {shouldLoadVideo && (
               <source
