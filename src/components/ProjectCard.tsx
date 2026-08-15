@@ -8,6 +8,7 @@ import {
   SmartLink,
   Text,
 } from "@once-ui-system/core";
+import { useEffect, useRef, useState } from "react";
 
 interface ProjectCardProps {
   href: string;
@@ -30,48 +31,111 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   link,
 }) => {
   const media = images?.[0] || "";
-  const isVideo = /\.(mp4|webm|ogg)(\?|$)/i.test(media);
+
+  /*
+   * Support all common video formats including MOV.
+   */
+  const isVideo = /\.(mp4|webm|ogg|mov)(\?|$)/i.test(media);
+
+  /*
+   * Mobile performance:
+   * Only attach the video source when the card is close to
+   * the viewport. This prevents 10+ videos from loading
+   * simultaneously on mobile.
+   */
+  const mediaRef = useRef<HTMLVideoElement | null>(null);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
+  useEffect(() => {
+    if (!isVideo || !mediaRef.current) return;
+
+    const video = mediaRef.current;
+
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoadVideo(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: "300px 0px",
+        threshold: 0.01,
+      }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isVideo]);
+
+  /*
+   * Cloudinary can convert the MOV to MP4 on delivery.
+   * This makes the POCO video much safer on mobile browsers.
+   */
+  const videoSrc = media.replace(
+    "/video/upload/",
+    "/video/upload/f_mp4/"
+  );
 
   return (
     <Column fillWidth gap="m">
       {media &&
         (isVideo ? (
           <video
+            ref={mediaRef}
             controls
             controlsList="nodownload noremoteplayback"
             disablePictureInPicture
             playsInline
-            preload="metadata"
-            onContextMenu={(e) => e.preventDefault()}
+            muted
+            preload="none"
+            poster=""
             style={{
               width: "100%",
+              height: "auto",
               aspectRatio: "16 / 9",
               objectFit: "cover",
               borderRadius: "12px",
               background: "#000",
+              display: "block",
+              maxWidth: "100%",
             }}
+            onContextMenu={(e) => e.preventDefault()}
           >
-            <source
-              src={media}
-              type={
-                media.toLowerCase().includes(".webm")
-                  ? "video/webm"
-                  : "video/mp4"
-              }
-            />
+            {shouldLoadVideo && (
+              <source
+                src={videoSrc}
+                type="video/mp4"
+              />
+            )}
+
+            Your browser does not support video playback.
           </video>
         ) : (
           <img
             src={media}
             alt={title}
             draggable={false}
+            loading="lazy"
             onContextMenu={(e) => e.preventDefault()}
             style={{
               width: "100%",
+              height: "auto",
               aspectRatio: "16 / 9",
               objectFit: "cover",
               borderRadius: "12px",
               display: "block",
+              maxWidth: "100%",
               userSelect: "none",
             }}
           />
@@ -87,7 +151,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       >
         {title && (
           <Flex flex={5}>
-            <Heading as="h2" wrap="balance" variant="heading-strong-xl">
+            <Heading
+              as="h2"
+              wrap="balance"
+              variant="heading-strong-xl"
+            >
               {title}
             </Heading>
           </Flex>
@@ -98,7 +166,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           content?.trim()) && (
           <Column flex={7} gap="16">
             {avatars?.length > 0 && (
-              <AvatarGroup avatars={avatars} size="m" reverse />
+              <AvatarGroup
+                avatars={avatars}
+                size="m"
+                reverse
+              />
             )}
 
             {description?.trim() && (
@@ -115,7 +187,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               {content?.trim() && (
                 <SmartLink
                   suffixIcon="arrowRight"
-                  style={{ margin: "0", width: "fit-content" }}
+                  style={{
+                    margin: "0",
+                    width: "fit-content",
+                  }}
                   href={href}
                 >
                   <Text variant="body-default-s">
@@ -127,7 +202,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               {link && (
                 <SmartLink
                   suffixIcon="arrowUpRightFromSquare"
-                  style={{ margin: "0", width: "fit-content" }}
+                  style={{
+                    margin: "0",
+                    width: "fit-content",
+                  }}
                   href={link}
                 >
                   <Text variant="body-default-s">
